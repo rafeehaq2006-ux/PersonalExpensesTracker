@@ -1,14 +1,8 @@
 from django.db import models
-
-class User(models.Model):
-    username = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.username
+from django.conf import settings
     
 class Expense(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='expenses')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='expenses')
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField()
     date = models.DateField()
@@ -16,7 +10,7 @@ class Expense(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='categories')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='categories')
 
     def __str__(self):
         return self.name

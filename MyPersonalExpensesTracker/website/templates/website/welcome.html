@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Welcome{% endblock %}
+{% block content %}
+    <h1>Welcome to Your Personal Expenses Tracker</h1>
+    <a href = "{% url 'login' %}">Login</a>
+    <a href = "{% url 'register' %}">Create New Account</a>
+    <a href = "{% url 'signout' %}">Sign Out</a>
+{% endblock %}

@@ -1,25 +1,49 @@
 from http.client import HTTPResponse
 
 from django.http import HttpResponse
-from django.shortcuts import render
-from Expensesmanagement.models import Expense, Category, User  
+from django.shortcuts import redirect, render
+from Expensesmanagement.models import Expense, Category
 from django.forms import modelform_factory
 from django.core.exceptions import ObjectDoesNotExist
-
-UserForm = modelform_factory(User, exclude=[])
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import logout
 
 def login(request):
+    if request.user.is_authenticated:
+        return render(request, 'website/Register.html')
+    
     if request.method == 'POST':
-        form = UserForm(request.POST)
+        form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-            if User.objects.filter(username=username, password=password).exists():
-                user = User.objects.get(username=username, password=password)
-                # redirect to the user's dashboard
-    else:
-        return render(request, 'website/login.html', {'error': 'Invalid username or password'})
+            user = form.get_user()
+            auth_login(request, user)
+            return render(request, 'website/Register.html')
+        else:
+            return render(request, 'website/Login.html', {'form': form})
+    form = AuthenticationForm()
+    return render(request, 'website/Login.html', {'form': form})
+
+def signout(request):
+    logout(request)
+    return redirect('login')
 
 def welcome(request):
-    return HttpResponse("Welcome to the Personal Expenses Tracker!")
+    return render(request, 'website/welcome.html')
+
+def register(request):
+    if request.user.is_authenticated:
+        return render(request, 'website/welcome.html')
+    
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user =form.save()
+            auth_login(request, user)
+            return redirect('welcome')
+    else:
+        form = UserCreationForm()
+    
+    return render(request, 'website/Register.html', {'form': form})
+
 # Create your views here.
