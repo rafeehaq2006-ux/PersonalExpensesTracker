@@ -11,14 +11,14 @@ from django.contrib.auth import logout
 
 def login(request):
     if request.user.is_authenticated:
-        return render(request, 'website/Register.html')
+        return render(request, 'Expensesmanagement/Dashboard.html')
     
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
             auth_login(request, user)
-            return render(request, 'website/Register.html')
+            return render(request, 'Expensesmanagement/Dashboard.html')
         else:
             return render(request, 'website/Login.html', {'form': form})
     form = AuthenticationForm()
@@ -33,7 +33,7 @@ def welcome(request):
 
 def register(request):
     if request.user.is_authenticated:
-        return render(request, 'website/welcome.html')
+        return render(request, 'Expensesmanagement/Dashboard.html')
     
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
