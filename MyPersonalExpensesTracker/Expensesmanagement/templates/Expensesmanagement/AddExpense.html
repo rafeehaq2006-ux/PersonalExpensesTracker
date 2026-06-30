@@ -2,5 +2,10 @@
 {% block title %}Add Expense{% endblock %}
 {% block content %}
 <h1>Add Expense</h1>
+<form method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <button type="submit">Add Expense</button>
+</form>
 <a href="{% url 'dashboard' %}">Back to Dashboard</a>
 {% endblock %}
