@@ -6,6 +6,7 @@ class ExpenseForm(ModelForm):
     class Meta:
         model = Expense
         fields = '__all__'
+        exclude = ['user']
         widgets = {
             'date': DateInput(attrs={'type': 'date'}),
             'amount': NumberInput(attrs={'type': 'number', 'step': '0.01'})  

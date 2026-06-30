@@ -15,7 +15,9 @@ def add_expense(request):
     if request.method == 'POST':
         form = ExpenseForm(request.POST)
         if form.is_valid():
-            expense = form.save()
+            expense = form.save(commit=False)
+            expense.user = request.user
+            expense.save()
             return render(request, 'Expensesmanagement/Dashboard.html')
         else:
             return render(request, 'Expensesmanagement/AddExpense.html', {'form': form})
