@@ -30,4 +30,8 @@ def view_expenses(request):
         return redirect('login')
     return render(request, 'Expensesmanagement/ViewExpenses.html')
 
+def add_category(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return render(request, 'Expensesmanagement/AddCategory.html')
 # Create your views here.
