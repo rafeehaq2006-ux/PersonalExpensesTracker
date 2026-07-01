@@ -38,8 +38,6 @@ def add_category(request):
         if form.is_valid():
             category = form.save(commit=False)
             category.user = request.user
-            print('USER:', request.user)
-            print('USER ID:', request.user.id)
             category.save()
             return render(request, 'Expensesmanagement/Dashboard.html')
         else:
