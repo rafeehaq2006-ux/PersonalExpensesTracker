@@ -26,7 +26,7 @@ def login(request):
 
 def signout(request):
     logout(request)
-    return redirect('login')
+    return redirect('welcome')
 
 def welcome(request):
     return render(request, 'website/welcome.html')
