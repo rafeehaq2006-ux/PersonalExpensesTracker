@@ -2,5 +2,10 @@
 {% block title %}Add Category{% endblock %}
 {% block content %}
 <h1>Add Category</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add New Category</button>
+</form>
 <a href = "{% url 'dashboard' %}">Back to Dashboard</a>
 {% endblock %}
